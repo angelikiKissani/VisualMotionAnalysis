@@ -13,7 +13,11 @@ relative to the keyboard.
 Course project for *Image Analysis and Computer Vision* (2022–2023),
 Politecnico di Milano, supervised by Prof. V. Caglioti.
 
-![Localization result](organ/results5_localization.png)
+<p align="center">
+  <img src="organ/finger_tracking.gif" alt="Original video, masked video and binary mask side by side" width="100%">
+  <br>
+  <em>Left: original video · Middle: background masked out · Right: binary finger mask</em>
+</p>
 
 ## Part 1: Finger extraction
 
@@ -30,6 +34,9 @@ Video reading → Foreground detection → Morphological operations → Mask app
 - **Output.** The mask is applied to every frame, hiding the background, and
   two videos are written: the masked footage (`organ/organ_result.avi`) and
   the binary mask alone (`organ/mask_organ.avi`).
+
+Full-resolution videos: [original](organ/organ.mp4) ·
+[masked result](organ/organ_result.avi) · [mask only](organ/mask_organ.avi)
 
 ## Part 2: Camera calibration and localization
 
@@ -55,9 +62,26 @@ calibration pattern.
    combined with **K**, gives the camera's rotation **R** and position
    relative to the scene.
 
-| Vanishing points and horizon | Horizontal rectification | Calibration |
+| Input frame | Vanishing points and line at infinity |
+|---|---|
+| ![](organ/image_frame.png) | ![](organ/Horizontal_Facade_vanishing%20points.png) |
+
+| Affine rectification | Orthogonal segment pairs | Metric rectification |
 |---|---|---|
-| ![](organ/results1_vanishingpoints_horizon.png) | ![](organ/results2_hor_reconstruction.png) | ![](organ/results3_calibration.png) |
+| ![](organ/affine_reconstruction.png) | ![](organ/orthogonal.png) | ![](organ/metric_rec.png) |
+
+| Vertical façade, 4 points selected | Vertical façade rectified |
+|---|---|
+| ![](organ/Vertical%20Facade%204%20points%20selected.png) | ![](organ/Vertical%20Facade%20reconstructed%20image.png) |
+
+<details>
+<summary><strong>Numerical results</strong> (vanishing points, matrices, K, camera pose)</summary>
+
+| Vanishing points | Rectification | Calibration (K) | Vertical façade | Camera pose |
+|---|---|---|---|---|
+| ![](organ/results1_vanishingpoints_horizon.png) | ![](organ/results2_hor_reconstruction.png) | ![](organ/results3_calibration.png) | ![](organ/results4_vert_rectification.png) | ![](organ/results5_localization.png) |
+
+</details>
 
 ## Running it
 
@@ -84,7 +108,7 @@ IACfunct.m              # estimates the image of the absolute conic
 calibration.m           # intrinsic matrix K from the IAC
 vert_rectification.m    # rectifies the vertical façade using K
 localization.m          # camera rotation and position from the homography
-organ/                  # input video, result videos, figures
+organ/                  # input video, result videos, GIF preview, figures
 Visual_motion_analysis_fingers_Kissani.pdf   # presentation
 results.pdf                                  # numerical results
 ```
